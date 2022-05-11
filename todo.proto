@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package todopackage;
+
+// Interface exported by the server.
+service Todo {
+
+  rpc createTodo(TodoItem) returns (TodoItem);
+  rpc readTodos(noParams) returns (TodoItems);
+
+  // A server-to-client streaming RPC. Results are
+  // streamed rather than returned at once
+  rpc readTodosStream(noParams) returns (stream TodoItem);
+}
+
+message noParams {}
+
+message TodoItem {
+  int32 id = 1;
+  string text = 2;
+}
+
+// A TodoItems is received in response to a readTodos rpc.
+message TodoItems {
+  repeated TodoItem items = 1;
+}
